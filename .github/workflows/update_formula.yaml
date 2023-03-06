@@ -49,6 +49,9 @@ jobs:
 
         # Create a local testing tap, copy the formula in it, and install it
         TAP_PATH=$(brew --repo $GITHUB_REPOSITORY)
+        echo $TAP_PATH
+        pwd
+        ls
         realpath Formula/${{ github.event.inputs.package }}.rb
         realpath $TAP_PATH/Formula/${{ github.event.inputs.package }}.rb
         cp Formula/${{ github.event.inputs.package }}.rb $TAP_PATH/Formula/${{ github.event.inputs.package }}.rb
