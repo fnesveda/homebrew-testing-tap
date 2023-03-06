@@ -48,10 +48,9 @@ jobs:
         export HOMEBREW_NO_INSTALL_CLEANUP=1
 
         # Create a local testing tap, copy the formula in it, and install it
-        brew tap-new --no-git testing/testing
-        TAP_PATH=$(brew tap-info testing/testing | sed -n 2p | cut -d " " -f 1)
+        TAP_PATH=$(brew --repo $GITHUB_REPOSITORY)
         cp Formula/${{ github.event.inputs.package }}.rb $TAP_PATH/Formula/${{ github.event.inputs.package }}.rb
-        brew install testing/testing/${{ github.event.inputs.package }}
+        brew install $GITHUB_REPOSITORY/${{ github.event.inputs.package }}
 
         # Run the formula tests
         brew test ${{ github.event.inputs.package }}
