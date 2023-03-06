@@ -36,7 +36,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Update formula definition
-      run: ./github/scripts/update_formula.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
+      run: ../scripts/update_formula.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
 
     - name: Set up Homebrew
       uses: Homebrew/actions/setup-homebrew@master
@@ -67,6 +67,6 @@ jobs:
 
     - name: Update formula definition and commit the result
       run: |
-        ./github/scripts/update_formula.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
+        ../scripts/update_formula.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
         git commit -a -m "Updating `${{ github.event.inputs.package }}` to version `${{ github.event.inputs.version }}`"
         git push
