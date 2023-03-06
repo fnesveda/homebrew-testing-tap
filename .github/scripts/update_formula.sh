@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -o errexit
-set -o xtrace
 
 PACKAGE_NAME=$1
 PACKAGE_VERSION=$2
@@ -22,7 +21,7 @@ for _i in {1..6}; do
     curl -sf "${PACKAGE_DEFINITION_URL}" &> /dev/null && break;
     echo "Package ${PACKAGE_NAME} version ${PACKAGE_VERSION} is not available yet."
     echo "Will retry in 30 seconds."
-    sleep 1;  # TODO: Increase to 30
+    sleep 30;
 done
 
 # Get the tarball URL from the package definition on NPM
