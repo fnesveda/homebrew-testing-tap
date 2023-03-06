@@ -1,0 +1,72 @@
+name: Update formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package/formula name'
+        required: true
+        type: string
+      version:
+        description: 'Package version'
+        required: true
+        type: string
+
+  workflow_call:
+    inputs:
+      package:
+        description: 'Package/formula name'
+        required: true
+        type: string
+      version:
+        description: 'Package version'
+        required: true
+        type: string
+
+jobs:
+  test-updated-formula:
+    name: Test updated version of formula
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Update formula definition
+      run: ./github/scripts/update_formula.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
+
+    - name: Set up Homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+
+    - name: Test updated formula
+      run: |
+        export HOMEBREW_NO_AUTO_UPDATE=1
+        export HOMEBREW_NO_ANALYTICS=1
+        export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+        # Create a local testing tap, copy the formula in it, and install it
+        brew tap-new --no-git testing/testing
+        TAP_PATH=$(brew tap-info testing/testing | sed -n 2p | cut -d " " -f 1)
+        cp Formula/${{ github.event.inputs.package }}.rb $TAP_PATH/Formula/${{ github.event.inputs.package }}.rb
+        brew install testing/testing/${{ github.event.inputs.package }}
+
+        # Run the formula tests
+        brew test ${{ github.event.inputs.package }}
+
+  update-formula:
+    name: Update formula definition with new version
+    needs: [test-updated-formula]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Update formula definition and commit the result
+      run: |
+        ./github/scripts/update_formula.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
+        git commit -a -m "Updating `${{ github.event.inputs.package }}` to version `${{ github.event.inputs.version }}`"
+        git push
