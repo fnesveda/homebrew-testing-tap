@@ -25,7 +25,7 @@ on:
 
 jobs:
   test-updated-formula:
-    name: Test updated version of formula
+    name: Test updated formula
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
