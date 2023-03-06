@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: 'Package/formula name'
+        description: 'Package & formula name'
         required: true
         type: string
       version:
@@ -15,7 +15,7 @@ on:
   workflow_call:
     inputs:
       package:
-        description: 'Package/formula name'
+        description: 'Package & formula name'
         required: true
         type: string
       version:
@@ -66,6 +66,8 @@ jobs:
     - name: Update formula definition and commit the result
       run: |
         ./.github/scripts/update_formula.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
+        git config user.name 'GitHub Actions'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
         git add Formula/apify-cli.rb
-        git commit -m "Updating `${{ github.event.inputs.package }}` to version `${{ github.event.inputs.version }}`"
+        git commit -m "Updating \`${{ github.event.inputs.package }}\` to version \`${{ github.event.inputs.version }}\`"
         git push

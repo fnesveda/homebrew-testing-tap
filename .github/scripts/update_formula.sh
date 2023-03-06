@@ -14,8 +14,6 @@ fi
 # Run in the Formula directory
 cd "$(dirname "$0")"/../../Formula
 
-ls -la
-
 PACKAGE_DEFINITION_URL="https://registry.npmjs.org/${PACKAGE_NAME}/${PACKAGE_VERSION}"
 
 # It can happen that the package is not available right after the publish command finishes
