@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -o errexit
+set -o xtrace
 
 PACKAGE_NAME=$1
 PACKAGE_VERSION=$2
