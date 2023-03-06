@@ -68,5 +68,6 @@ jobs:
     - name: Update formula definition and commit the result
       run: |
         ./.github/scripts/update_formula.sh ${{ github.event.inputs.package }} ${{ github.event.inputs.version }}
-        git commit -a -m "Updating `${{ github.event.inputs.package }}` to version `${{ github.event.inputs.version }}`"
+        git add Formula/apify-cli.rb
+        git commit -m "Updating `${{ github.event.inputs.package }}` to version `${{ github.event.inputs.version }}`"
         git push
