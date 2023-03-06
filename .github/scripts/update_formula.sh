@@ -36,4 +36,4 @@ SHA256=$(curl -sf "${TARBALL_URL}" | sha256sum | cut -d " " -f 1)
 # We have to use `@` as the sed command separator because URLs contain `/`
 sed -i.bak -e "s@  url .*@  url \"${TARBALL_URL}\"@" "${PACKAGE_NAME}.rb"
 sed -i.bak -e "s@  sha256 .*@  sha256 \"${SHA256}\"@" "${PACKAGE_NAME}.rb"
-rm -rf apify-cli.rb.bak
+rm -rf "${PACKAGE_NAME}.rb.bak"
