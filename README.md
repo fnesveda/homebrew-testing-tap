@@ -2,12 +2,12 @@
 
 ## What is Homebrew?
 
-Homebrew is a package manager for macOS (or Linux), see more at <https://brew.sh>
+A package manager for macOS (or Linux), see more at <https://brew.sh>.
 
 ## What is a Tap?
 
-A third-party (in relation to Homebrew) repository providing installable
-packages (formulae) on macOS and Linux.
+A third-party (in relation to Homebrew) repository
+providing installable packages (formulae) on macOS and Linux.
 
 See more at <https://docs.brew.sh/Taps>
 
